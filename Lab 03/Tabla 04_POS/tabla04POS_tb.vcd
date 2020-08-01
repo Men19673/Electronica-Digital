@@ -1,5 +1,5 @@
 $date
-	Sat Aug 01 00:57:45 2020
+	Sat Aug 01 00:59:14 2020
 $end
 $version
 	Icarus Verilog
@@ -102,10 +102,12 @@ $end
 00
 1/
 #9
+0.
 0)
 0-
 12
 #10
+1.
 1-
 1)
 0,
