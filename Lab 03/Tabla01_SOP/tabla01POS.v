@@ -19,8 +19,8 @@ module tabla01POS();
 
     $display("A B C | Y");
     $display("---------");
-    $monitor("%b %b %b %b", inA, inB, inC, outres);
-    #1 inA=0; inB=0; inC=0;
+    $monitor("%b %b %b %b",inA,inB,inC,outres);
+       inA=0; inB=0; inC=0;
     #1 inA=0; inB=0; inC=1;
     #1 inA=0; inB=1; inC=0;
     #1 inA=0; inB=1; inC=1;
@@ -28,13 +28,13 @@ module tabla01POS();
     #1 inA=1; inB=0; inC=1;
     #1 inA=1; inB=1; inC=0;
     #1 inA=1; inB=1; inC=1;
-    #1 $finish;
+    $finish;
   end
 
   initial
     begin
       $dumpfile("tabla01POS_tb.vcd");
       $dumpvars(0,tabla01POS);
-    end
+  end
 
 endmodule
