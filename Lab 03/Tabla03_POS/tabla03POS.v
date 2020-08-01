@@ -22,7 +22,7 @@ module tabla03POS();
   or U11 (out08,outAN,outBN,inC,outDN);
   or U11 (out09,outAN,outBN,outCN,outDN);
 
-  or UR(outres,out01,out02,out03,out04,out05,out06,out07,out08,out09);
+  and UR(outres,out01,out02,out03,out04,out05,out06,out07,out08,out09);
 
   initial begin
 
