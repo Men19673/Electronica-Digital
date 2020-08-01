@@ -18,10 +18,10 @@ module tabla04SOP();
   and U7 (out04,outAN,inB,inC,outDN);
   and U8 (out05,outAN,inB,inC,inD);
   and U9 (out06,inA,outBN,outCN,outDN);
-  and U10 (out07,inA,outBN,outCN,inD);
+//eliminado debido a correciones en la hoja
   and U11 (out08,inA,outBN,inC,outDN);
 
-  or UR(outres,out01,out02,out03,out04,out05,out06,out07,out08);
+  or UR(outres,out01,out02,out03,out04,out05,out06,out08);
 
   initial begin
 
