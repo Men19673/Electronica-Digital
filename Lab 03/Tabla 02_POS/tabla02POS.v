@@ -1,6 +1,6 @@
-module tabla01SOP();
+module tabla02POS();
 
-//SOP tabla01
+//SOP tabla02POS
 
   wire outAN,outBN,outCN,out01,out02,out03,out04,out05,outres;
 
@@ -10,12 +10,13 @@ module tabla01SOP();
   not U2 (outBN, inB);
   not U3 (outCN, inC);
 
-  and U4 (out01,outAN,outBN,outCN);
-  and U5 (out02,outAN,inB,outCN);
-  and U6 (out03,inA,outBN,outCN);
-  and U7 (out04,inA,outBN,inC);
-  and U8 (out05,inA,inB,inC);
-  or UR(outres,out01,out02,out03,out04,out05);
+//Product of Sums
+  or U4 (out01,inA,inB,inC);
+  or U5 (out02,inA,outBN,inC);
+  or U6 (out03,inA,outBN,outCN);
+  or U7 (out04,outAN,inB,inC);
+  or U8 (out05,outAN,inB,outCN);
+  and UR(outres,out01,out02,out03,out04,out05);
 
   initial begin
 
@@ -36,8 +37,8 @@ module tabla01SOP();
 //no olvidar el cambio de archivo
   initial
     begin
-      $dumpfile("tabla01SOP_tb.vcd");
-      $dumpvars(0,tabla01SOP);
+      $dumpfile("tabla02POS_tb.vcd");
+      $dumpvars(0,tabla02POS);
   end
 
 endmodule

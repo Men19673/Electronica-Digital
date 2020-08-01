@@ -1,8 +1,8 @@
-module tabla01SOP();
+module tabla02SOP();
 
-//SOP tabla01
+//SOP tabla02
 
-  wire outAN,outBN,outCN,out01,out02,out03,out04,out05,outres;
+  wire outAN,outBN,outCN,out01,out02,out03,out04,outres;
 
   reg inA,inB,inC;
 
@@ -10,12 +10,10 @@ module tabla01SOP();
   not U2 (outBN, inB);
   not U3 (outCN, inC);
 
-  and U4 (out01,outAN,outBN,outCN);
-  and U5 (out02,outAN,inB,outCN);
-  and U6 (out03,inA,outBN,outCN);
-  and U7 (out04,inA,outBN,inC);
-  and U8 (out05,inA,inB,inC);
-  or UR(outres,out01,out02,out03,out04,out05);
+  and U4 (out01,outAN,outBN,inC);
+  and U5 (out02,inA,inB,outCN);
+  and U6 (out03,inA,inB,inC);
+  or U4(outres,out01,out02,out03);
 
   initial begin
 
@@ -33,11 +31,11 @@ module tabla01SOP();
     $finish;
   end
 
-//no olvidar el cambio de archivo
+// no olvidar cambiar el dump
   initial
     begin
-      $dumpfile("tabla01SOP_tb.vcd");
-      $dumpvars(0,tabla01SOP);
+      $dumpfile("tabla02SOP_tb.vcd");
+      $dumpvars(0,tabla02SOP);
   end
 
 endmodule

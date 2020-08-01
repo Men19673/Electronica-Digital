@@ -31,6 +31,7 @@ module tabla01POS();
     $finish;
   end
 
+// no olvidar cambiar el dump
   initial
     begin
       $dumpfile("tabla01POS_tb.vcd");
