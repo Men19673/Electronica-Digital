@@ -13,9 +13,9 @@ module tabla03POS();
 
 // Products of sum
   or U4 (out01,inA,outBN,inC,inD);
-  or U5 (out02,inA,outBN,inC,outD);
-  or U6 (out03,inA,outBN,outC,inD);
-  or U7 (out04,inA,outBN,outC,outD);
+  or U5 (out02,inA,outBN,inC,outDN);
+  or U6 (out03,inA,outBN,outCN,inD);
+  or U7 (out04,inA,outBN,outCN,outDN);
   or U8 (out05,outAN,inB,inC,outDN);
   or U9 (out06,outAN,inB,outCN,outDN);
   or U10 (out07,outAN,outBN,inC,inD);
