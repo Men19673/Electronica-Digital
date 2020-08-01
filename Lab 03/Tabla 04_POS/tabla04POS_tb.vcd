@@ -1,0 +1,140 @@
+$date
+	Sat Aug 01 00:48:30 2020
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tabla04POS $end
+$var wire 1 ! out01 $end
+$var wire 1 " out02 $end
+$var wire 1 # out03 $end
+$var wire 1 $ out04 $end
+$var wire 1 % out05 $end
+$var wire 1 & out06 $end
+$var wire 1 ' out07 $end
+$var wire 1 ( out08 $end
+$var wire 1 ) outAN $end
+$var wire 1 * outBN $end
+$var wire 1 + outCN $end
+$var wire 1 , outDN $end
+$var wire 1 - outres $end
+$var reg 1 . inA $end
+$var reg 1 / inB $end
+$var reg 1 0 inC $end
+$var reg 1 1 inD $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+01
+00
+0/
+0.
+1-
+1,
+1+
+1*
+1)
+1(
+1'
+1&
+1%
+1$
+1#
+1"
+1!
+$end
+#1
+0-
+0!
+0,
+11
+#2
+1-
+1,
+1!
+0+
+01
+10
+#3
+0,
+11
+#4
+0-
+1,
+1#
+0"
+1+
+0*
+01
+00
+1/
+#5
+0#
+1"
+0,
+11
+#6
+1-
+1,
+1#
+0+
+01
+10
+#7
+0,
+11
+#8
+1-
+1,
+1+
+1$
+1*
+0)
+01
+00
+0/
+1.
+#9
+0,
+11
+#10
+1,
+0+
+01
+10
+#11
+0-
+0$
+0,
+11
+#12
+1,
+1&
+0%
+1+
+1$
+0*
+01
+00
+1/
+#13
+0&
+1%
+0,
+11
+#14
+0'
+1,
+1&
+0+
+01
+10
+#15
+0(
+1'
+0,
+11
