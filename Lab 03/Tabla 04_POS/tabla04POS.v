@@ -20,8 +20,10 @@ module tabla04POS();
   or U9 (out06,outAN,outBN,inC,outDN);
   or U10 (out07,outAN,outBN,outCN,inD);
   or U11 (out08,outAN,outBN,outCN,outDN);
+// correccion me falto uno en la hoja--corregido
+  or U9 (out09,outAN,inB,inC,outDN);
 
-  and UR(outres,out01,out02,out03,out04,out05,out06,out07,out08);
+  and UR(outres,out01,out02,out03,out04,out05,out06,out07,out08,09);
 
   initial begin
 
