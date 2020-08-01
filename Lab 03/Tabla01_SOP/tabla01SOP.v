@@ -1,4 +1,4 @@
-module tabla01();
+module tabla01SOP();
 
 //POS tabla01
 
@@ -14,7 +14,7 @@ module tabla01();
   and U5 (out02,outAN,inB,outCN);
   and U6 (out03,inA,outBN,outCN);
   and U7 (out04,inA,outBN,inC);
-  and U8 (out05,inA,inB,inC)
+  and U8 (out05,inA,inB,inC);
   or UR(outres,out01,out02,out03,out04,out05);
 
   initial begin
