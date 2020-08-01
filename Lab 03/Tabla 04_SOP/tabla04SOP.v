@@ -21,7 +21,7 @@ module tabla04SOP();
   and U10 (out07,inA,outBN,outCN,inD);
   and U11 (out08,inA,outBN,inC,outDN);
 
-  or UR(outres,out01,out02,out03,out04,out05,out06,out07,out08,out09);
+  or UR(outres,out01,out02,out03,out04,out05,out06,out07,out08);
 
   initial begin
 
