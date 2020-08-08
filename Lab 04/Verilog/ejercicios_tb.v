@@ -8,8 +8,9 @@ module testbench();
   E1_1GL E1(inA1, inB1, inC1, Y1);
   E1_2GL E2(inA2, inB2, inC2, Y2);
   E1_3OP E3(inA3, inB3, inC3, inD3, Y3);
+  E1_4GL E4(inA4, inB4, inC4, inD4, Y4);
   initial begin
-    $display(" ");                                                               //iniciamos el módulo Ej1.1
+    $display(" ");          //iniciamos el módulo Ej1.1
     $display("EJERCICIO 1.1");
     $display("A B C | Y");
     $display("----------");
@@ -24,7 +25,7 @@ module testbench();
     #1 inA1=1; inB1=1; inC1=1;
     end
 
-  initial begin                                                                 //iniciamos el módulo Ej1.1
+  initial begin                //iniciamos el módulo Ej1.2
     #9
     $display("");
     $display("EJERCICIO 1.2");
@@ -43,7 +44,7 @@ module testbench();
 
   initial begin
     #18
-      $display(" ");                                                               //iniciamos el módulo Ej1.1
+      $display(" ");         //iniciamos el módulo Ej1.3
       $display("EJERCICIO 1.3");
       $display("A B C D | Y");
       $display("----------");
@@ -66,6 +67,30 @@ module testbench();
       #1 inA3=1; inB3=1; inC3=1; inD3=1;
     end
 
+    initial begin
+      #25
+        $display(" ");         //iniciamos el módulo Ej1.4
+        $display("EJERCICIO 1.4");
+        $display("A B C D | Y");
+        $display("----------");
+        $monitor("%b %b %b %b  %b",inA4,inB4,inC4,inD4,Y4);
+          inA4=0; inB4=0; inC4=0; inD4=0;
+        #1 inA4=0; inB4=0; inC4=0; inD4=1;
+        #1 inA4=0; inB4=0; inC4=1; inD4=0;
+        #1 inA4=0; inB4=0; inC4=1; inD4=1;
+        #1 inA4=0; inB4=1; inC4=0; inD4=0;
+        #1 inA4=0; inB4=1; inC4=0; inD4=1;
+        #1 inA4=0; inB4=1; inC4=1; inD4=0;
+        #1 inA4=0; inB4=1; inC4=1; inD4=1;
+        #1 inA4=1; inB4=0; inC4=0; inD4=0;
+        #1 inA4=1; inB4=0; inC4=0; inD4=1;
+        #1 inA4=1; inB4=0; inC4=1; inD4=0;
+        #1 inA4=1; inB4=0; inC4=1; inD4=1;
+        #1 inA4=1; inB4=1; inC4=0; inD4=0;
+        #1 inA4=1; inB4=1; inC4=0; inD4=1;
+        #1 inA4=1; inB4=1; inC4=1; inD4=0;
+        #1 inA4=1; inB4=1; inC4=1; inD4=1;
+      end
 
   initial begin
 
