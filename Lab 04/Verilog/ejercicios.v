@@ -32,3 +32,21 @@ module E1_3OP(input wire A, B, C, D, output wire Y3);
   assign Y3 = (~A & ~B & ~C & ~D) | (~A & ~B & C & D) | (~A & B & ~C & D) | (~A & B & C & ~D) | (A & B & ~C & ~D) | (A & B & C & D) | (A & ~B & ~C & D) | (A & ~B & C & ~D);
 
 endmodule
+
+module E1_4GL (input wire A, B, C, D, output wire Y4);
+  //Ejercicio 1.4 con GateLevel Modeling
+
+  wire outAN, outBN, outCN, outDN, out01, out02, out03, out04;
+  //not's
+    not U1 (outAN,A);
+    not U2 (outBN,B);
+    not U3 (outCN,C);
+    not U4 (outDN,D);
+
+  //compuertas
+
+  and U5(out01, A, B);
+  and U6(out02, A, outCN, outDN);
+  and U7(out03, A, B, C);
+  or U8(Y4, out01, out02, out03);  
+endmodule //E1_4
