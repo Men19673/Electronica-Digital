@@ -31,4 +31,5 @@ module E1.2GL(input wire A, B, output wire Y);
   and U4 (out01, outAN, outBN);
   and U5 (out02, A, outBN);
   or U7 (Y, out01, out02, B);
+  
 endmodule
