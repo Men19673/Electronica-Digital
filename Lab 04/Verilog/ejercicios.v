@@ -58,16 +58,27 @@ module E2_1OP (input wire A, B, C, D, output wire Y5);
 endmodule // E2_1OP
 
 
-module E2_3GL (input A, B, C, B, output wire Y6);
+module E2_2GL (input A, B, C, output wire Y6);
 //Ejercicio 2.2 con GateLevel Modeling
 
   //Not's
   not U1 (outAN,A);
   not U2 (outBN,B);
   not U3 (outCN,C);
-  not U4 (outDN,D);
 
   //compuertas
   or U5 (Y6, C, outBN);
 
-endmodule // E2_3GL
+endmodule // E2_2GL
+
+module E2_3OP (input A, B, C, D, output wire Y7);
+
+  assign Y7= (B) | (~C & D) | (A & ~B & D);
+
+endmodule // E2_3OP
+
+module E2_4OP (input A, B, C, output wire Y8);
+
+  assign Y8 = (B) | (~A & ~C);
+
+endmodule // E2_4OP
