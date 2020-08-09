@@ -1,3 +1,6 @@
+//Diego Alejandro Mendez
+//Carnet 19673
+//Ejercicio 05
 module testbench();
 // registrar entradas
   reg inA1, inB1, inC1;

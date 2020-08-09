@@ -1,4 +1,6 @@
-
+//Diego Alejandro Mendez
+//Carnet 19673
+//Ejercicio 04
 module E1_1GL(input wire A, B, C, output wire Y1);
 //ejercicio 1.1 con GateLevel Modeling
 
