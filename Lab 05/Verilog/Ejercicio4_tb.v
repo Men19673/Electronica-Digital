@@ -5,8 +5,10 @@
 module testbench();
 // registrar entradas
 
-  reg inA2, inB2, inC2;
-  reg inA3, inB3, inC3;
+  reg inC2;
+  reg inB3, inC3;
+  reg inC5;
+  reg inB6, inC6;
 
 
   reg[2:0] inS1, inS4;
@@ -18,10 +20,14 @@ module testbench();
     tabla1mux8 U1(inS1, Y1);
     tabla1mux4 U2(inC2, inS2, Y2);
     tabla1mux2 U3(inS3, inB3, inC3 ,Y3);
+    tabla2mux8 U4(inS4, Y4);
+    tabla2mux4 U5(inC5, inS5, Y5);
+    tabla2mux2 U6(inS6, inB6, inC6, Y6);
 
 
   initial begin //iniciamos el mux8_1
     $display(" ");
+    $display(" Tabla 1 ");
     $display("Mux8 a 1");
     $display("ABC | Y");
     $display("----------");
@@ -40,6 +46,7 @@ module testbench();
     initial begin //iniciamos el mux8_1
     #8
         $display(" ");
+        $display(" Tabla 1 ");
         $display("Mux4 a 1");
         $display("ABC | Y");
         $display("----------");
@@ -57,7 +64,8 @@ module testbench();
       initial begin //iniciamos el mux8_1
       #16
           $display(" ");
-          $display("Mux4 a 1");
+          $display(" Tabla 1 ");
+          $display("Mux2 a 1");
           $display("ABC | Y");
           $display("----------");
           $monitor("%b%b%b | %b",inS3, inB3, inC3 ,Y3);
@@ -71,9 +79,63 @@ module testbench();
             #1 inS3=1; inB3=1; inC3=1;
             end
 
+      initial begin //iniciamos el mux8_1
+      #25
+        $display(" ");
+        $display(" Tabla 2 ");
+        $display("Mux8 a 1");
+        $display("ABC | Y");
+        $display("----------");
+        $monitor("%b | %b",inS4 ,Y4);
+
+             inS4=000;
+          #1 inS4=001;
+          #1 inS4=010;
+          #1 inS4=011;
+          #1 inS4=100;
+          #1 inS4=101;
+          #1 inS4=110;
+          #1 inS4=111;
+          end
+      initial begin //iniciamos el mux8_1
+      #33
+          $display(" ");
+          $display(" Tabla 2 ");
+          $display("Mux4 a 1");
+          $display("ABC | Y");
+          $display("----------");
+          $monitor("%b%b | %b",inS5, inC5 ,Y5);
+               inS5=00; inC5=0;
+            #1 inS5=00; inC5=1;
+            #1 inS5=01; inC5=0;
+            #1 inS5=01; inC5=1;
+            #1 inS5=10; inC5=0;
+            #1 inS5=10; inC5=1;
+            #1 inS5=11; inC5=0;
+            #1 inS5=11; inC5=1;
+            end
+
+      initial begin //iniciamos el mux8_1
+      #41
+          $display(" ");
+          $display(" Tabla 1 ");
+          $display("Mux2 a 1");
+          $display("ABC | Y");
+          $display("----------");
+          $monitor("%b%b%b | %b",inS6, inB6, inC6 ,Y6);
+               inS6=0; inB6=0; inC6=0;
+            #1 inS6=0; inB6=0; inC6=1;
+            #1 inS6=0; inB6=1; inC6=0;
+            #1 inS6=0; inB6=1; inC6=1;
+            #1 inS6=1; inB6=0; inC6=0;
+            #1 inS6=1; inB6=0; inC6=1;
+            #1 inS6=1; inB6=1; inC6=0;
+            #1 inS6=1; inB6=1; inC6=1;
+            end
+
     initial
 
-    #25 $finish;
+    #49 $finish;
 
   initial begin
 
