@@ -10,7 +10,7 @@ module testbench();
 //Iniciamos el clock
     always
       begin
-      clk <= 0; reset<=0; #1 clk<=1; #1;
+      clk <= 1 ; #1 clk<=0; #1;
 
       end
 //Llamamos al modelo FSM
@@ -21,12 +21,22 @@ module testbench();
             $display(" ");
             $display("  ");
             $display(" ");
-            $display("CLK | RST | A | B | Y");
+            $display("CLK | RST | A | Y");
             $display("----------");
             $monitor("%b | %b | %b | %b",clk ,reset, A, Y);
 
-             A=1;
-            #10 A=0;
+               A=1; reset=1;
+            #2 A=1; reset=0;
+            #2 A=1;
+            #2 A=1;
+            #2 A=1;
+            #2 A=1;
+            #2 A=1;
+            #2 A=1;
+            #2 A=0;
+            #2 A=0;
+            #2A=0;
+            #2A=0;
 
 
           end

@@ -23,7 +23,4 @@ module ffD(input clk, reset, set,
       end
 
 
-
-
-
 endmodule
