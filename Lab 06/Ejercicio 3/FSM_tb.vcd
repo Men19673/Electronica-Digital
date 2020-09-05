@@ -1,0 +1,123 @@
+$date
+	Sat Sep 05 04:05:51 2020
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module testbench $end
+$var wire 3 ! Y [2:0] $end
+$var reg 1 " A $end
+$var reg 1 # clk $end
+$var reg 1 $ reset $end
+$scope module U1 $end
+$var wire 1 " A $end
+$var wire 1 % Sf0 $end
+$var wire 1 & Sf1 $end
+$var wire 1 ' Sf2 $end
+$var wire 1 # clk $end
+$var wire 1 ( nA $end
+$var wire 1 ) nS0 $end
+$var wire 1 * nS1 $end
+$var wire 1 + nS2 $end
+$var wire 1 $ reset $end
+$var wire 3 , Y [2:0] $end
+$var wire 1 - S2 $end
+$var wire 1 . S1 $end
+$var wire 1 / S0 $end
+$scope module U1 $end
+$var wire 1 & D $end
+$var wire 1 # clk $end
+$var wire 1 $ reset $end
+$var reg 1 . Q $end
+$upscope $end
+$scope module U2 $end
+$var wire 1 % D $end
+$var wire 1 # clk $end
+$var wire 1 $ reset $end
+$var reg 1 / Q $end
+$upscope $end
+$scope module U3 $end
+$var wire 1 ' D $end
+$var wire 1 # clk $end
+$var wire 1 $ reset $end
+$var reg 1 - Q $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+x/
+x.
+x-
+bx ,
+x+
+x*
+x)
+0(
+x'
+x&
+x%
+0$
+0#
+1"
+bx !
+$end
+#1
+1#
+#2
+0#
+#3
+1#
+#4
+0#
+#5
+1#
+#6
+0#
+#7
+1#
+#8
+0#
+#9
+1#
+#10
+0#
+0%
+1(
+0"
+#11
+0'
+0&
+1)
+bx0 !
+bx0 ,
+0/
+1#
+#12
+0#
+#13
+1+
+1*
+0-
+b0 !
+b0 ,
+0.
+1#
+#14
+0#
+#15
+1#
+#16
+0#
+#17
+1#
+#18
+0#
+#19
+1#
+#20
+0#

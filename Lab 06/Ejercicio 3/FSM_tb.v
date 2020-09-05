@@ -5,7 +5,7 @@ module testbench();
 
   reg clk, reset;
   reg A;
-  wire Y;
+  wire[2:0] Y;
 
 //Iniciamos el clock
     always
@@ -24,20 +24,15 @@ module testbench();
             $display("CLK | RST | A | B | Y");
             $display("----------");
             $monitor("%b | %b | %b | %b",clk ,reset, A, Y);
-             A=0;
-            #2 A=0;
-            #2 A=1;
-            #2 A=1;
-            #2 A=0;
-            #2 A=0;
-            #2 A=1;
-            #2 A=1;
+
+             A=1;
+            #10 A=0;
 
 
           end
 
         initial
-        #15 $finish;
+        #20 $finish;
 
         initial begin
           $dumpfile("FSM_tb.vcd");
