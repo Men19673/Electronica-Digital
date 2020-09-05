@@ -9,7 +9,7 @@ module testbench();
 
     always
       begin
-      #1 clk <= 1; set<=0 ;#1 clk<=0; set<=1; #1;
+      #1 clk <= 1; set<=0 ;#1 clk<=0; set<=1;
       end
 
     ffD U1(clk, reset, set, D, Q);
@@ -19,11 +19,11 @@ module testbench();
       $display(" ");
       $display("  ");
       $display(" ");
-      $display("CLK | RST | D | Q");
+      $display("CLK | RST | ST | D | Q");
       $display("----------");
-      $monitor("%b | %b | %b | %b",clk ,reset, D, Q);
-           set=1; reset<=0;
-        #1 set=0;
+      $monitor("%b | %b | %b | %b | %b",clk ,reset, set, D, Q);
+           reset<=0;
+        #1 D<=000;
         #1 D<=001;
         #1 D<=010;
         #1 D<=011;
