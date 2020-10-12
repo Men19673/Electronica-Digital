@@ -1,0 +1,33 @@
+[*]
+[*] GTKWave Analyzer v3.3.77 (w)1999-2016 BSI
+[*] Sun Oct 11 23:33:35 2020
+[*]
+[dumpfile] "C:\Users\diego\OneDrive - Universidad del Valle de Guatemala\University\Semesters\Fall 2020\Electronica Digital\Electronica-Digital\Proyecto\FSM_tb.vcd"
+[savefile] "C:\Users\diego\OneDrive - Universidad del Valle de Guatemala\University\Semesters\Fall 2020\Electronica Digital\Electronica-Digital\Proyecto\Grafico de Timing de Funcionamiento completo.gtkw"
+[timestart] 1
+[size] 1536 801
+[pos] -61 -61
+*-3.477579 29 5 7 11 15 29 33 35 39 47 57 27 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] testbench.
+[treeopen] testbench.U1.
+[sst_width] 197
+[signals_width] 102
+[sst_expanded] 1
+[sst_vpaned_height] 224
+@28
+testbench.T
+testbench.S
+testbench.L
+testbench.B
+testbench.SP
+testbench.U1.PF[1:0]
+testbench.LCD[1:0]
+testbench.SSP[1:0]
+testbench.LCD2[1:0]
+testbench.Mo[1:0]
+testbench.MP
+testbench.SN
+@29
+testbench.LED
+[pattern_trace] 1
+[pattern_trace] 0
