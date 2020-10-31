@@ -17,13 +17,10 @@ endmodule
 
 module ffT (input clk, reset, enable, output wire Q);
 
-  reg D;
+  wire jumper;
+  not(jumper, Q);
 
-      always @(posedge clk) begin
-        //Hacemos que el valor se invierta
-        D = ~Q;
-      end
-        ffD U1(clk, reset, enable, D, Q);
+  ffD U1(clk, reset, enable, jumper, Q);
 
 
 
