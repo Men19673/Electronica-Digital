@@ -40,10 +40,10 @@ module testbench();
           end
 
         initial
-        #15 $finish;
+        #18 $finish;
 
         initial begin
-          $dumpfile("FFD2B.vcd");
+          $dumpfile("FFD2B_tb.vcd");
           $dumpvars(0, testbench);
         end
 
