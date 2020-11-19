@@ -24,29 +24,30 @@ endmodule
 
 module ALU(input wire[3:0] A, B, input wire[2:0] F, output wire Carry, Zero, output wire[3:0] Y );
 
-reg[4:0] Y_5;
+  reg[4:0] Y_5;
 
-  always@(A,B,F) begin
+    always@(A,B,F) begin
 
-    case(F)
-        default: Y_5 <= 5'b00000;
-        //Sacar del accumulator
-        3'b000:  Y_5<= A ;
-        //Compare y Resta
-        3'b001:  Y_5<= A - B;
-        //Dejar pasar B
-        3'b010:  Y_5<= B;
-        //Suma A y B
-        3'b011:  Y_5<= A + B;
-        //NAND
-        3'b100:  Y_5<=(A~&B);
-        //Para que carry no este en alta
+      case(F)
+      //Para que carry no este en alta
+          default: Y_5 <= 5'b00000;
+          //Sacar del accumulator
+          3'b000:  Y_5<= A ;
+          //Compare y Resta
+          3'b001:  Y_5<= A - B;
+          //Dejar pasar B
+          3'b010:  Y_5<= B;
+          //Suma A y B
+          3'b011:  Y_5<= A + B;
+          //NAND
+          3'b100:  Y_5<=(A~&B);
 
-    endcase
-    end
-assign Carry= Y_5[4];
-assign Y=Y_5[3:0];
-assign Zero = (Y_5[3:0]==0)? 1 : 0;
+
+      endcase
+      end
+    assign Carry= Y_5[4];
+    assign Y=Y_5[3:0];
+    assign Zero = (Y_5[3:0]==0)? 1 : 0;
 
 endmodule
 
@@ -78,14 +79,14 @@ endmodule
 //Memoria ROM
 module memoria(input wire[11:0] address, output wire [7:0] data);
 
-reg[7:0] memory[0:4095];
+  reg[7:0] memory[0:4095];
 
-  initial begin
-//recordar hacer la lista con .list
- $readmemb("EPROM.list", memory);
-  end
+    initial begin
+  //recordar hacer la lista con .list
+   $readmemb("EPROM.list", memory);
+    end
 
- assign data = memory[address];
+   assign data = memory[address];
 
 endmodule
 
@@ -132,7 +133,44 @@ module RAM(input reg[11:0] RAMaddress, input wire csRAM, weRAM, output reg [3:0]
 
         //Buffer de la RAM
         assign RAMdata= (csRAM && !weRAM) ? dataout : 4'bz;
+  endmodule
+  //Decoder
+  module deco(input wire[6:0] F, output reg[12:0] Y);
+
+      always@(F) begin
+        case(F)
+    //Implementamos la tabla con cses
+            7'b0000000: assign Y= 13'b1000000001000;
+            7'b1000000: assign Y= 13'b1000000001000;
+            7'b0000101: assign Y= 13'b0100000001000;
+            7'b0000111: assign Y= 13'b0100000001000;
+            7'b0000001: assign Y= 13'b1000000001000;
+            7'b0000011: assign Y= 13'b1000000001000;
+            7'b0001101: assign Y= 13'b1000000001000;
+            7'b0001001: assign Y= 13'b0100000001000;
+            7'b0001101: assign Y= 13'b0100000001000;
+            7'b0010001: assign Y= 13'b0001001000010;
+            7'b0011001: assign Y= 13'b1001001100000;
+            7'b0100001: assign Y= 13'b0011010000010;
+            7'b0100011: assign Y= 13'b0011010000010;
+            7'b0101001: assign Y= 13'b0011010000100;
+            7'b0110001: assign Y= 13'b1011010100000;
+            7'b0111001: assign Y= 13'b1000000111000;
+            7'b1000011: assign Y= 13'b0100000001000;
+            7'b1000001: assign Y= 13'b1000000001000;
+            7'b1001011: assign Y= 13'b1000000001000;
+            7'b1001001: assign Y= 13'b0100000001000;
+            7'b1010001: assign Y= 13'b0011011000010;
+            7'b1011001: assign Y= 13'b1011011100000;
+            7'b1100001: assign Y= 13'b0100000001000;
+            7'b1101001: assign Y= 13'b0000000001001;
+            7'b1110001: assign Y= 13'b0011100000010;
+            7'b1111001: assign Y= 13'b1011100100000;
+          endcase
+
+      end
     endmodule
+
 
 //Modulo desde el contador hasta el Fetch
 module PCFetch(input wire clk, reset, ENcounter, ENnotphase, Load, input wire[11:0] InputLoad, output wire[3:0] oprnd, instr);
