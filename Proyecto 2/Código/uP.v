@@ -30,12 +30,14 @@ module ffD4B (input clk, reset, enable, input[3:0] D, output wire[3:0] Q);
 
 endmodule // ffD4B
 
-module Flags(input clk, reset, enable, carryon , zerroz, output wire Q[1], Q[0]);
- wire[2:0] D;
-  D[1]= carryon;
-  D[0]= zerroz;
+module Flags(input wire clk, reset, enable, carryon, zerroz, output wire Q1, Q0);
+ wire[1:0] D, Q;
+  assign D[1]= carryon;
+  assign D[0]= zerroz;
 
     ffD2B U1(clk, reset, enable, D, Q);
+  assign  Q1=Q[1];
+  assign  Q0=Q[0];
 endmodule
 
 //Este es un buffer de 4 bits que son los que se encuentran conectados al data bus
@@ -59,13 +61,13 @@ module accu(input clk, reset, enable, input wire[3:0] D, output reg[3:0] Q);
      end //Always
 endmodule
 
-module ALU(input wire[3:0] A, B, input wire[2:0] F, output wire Carry, Zero, output wire[3:0] Y );
+module ALU(input wire[3:0] A, B, input wire[2:0] S, output wire Carry, Zero, output wire[3:0] Y );
 
   reg[4:0] Y_5;
 
-    always@(A,B,F) begin
+    always@(A,B,S) begin
 
-      case(F)
+      case(S)
       //Para que carry no este en alta
           default: Y_5 <= 5'b00000;
           //Sacar del accumulator
@@ -77,7 +79,7 @@ module ALU(input wire[3:0] A, B, input wire[2:0] F, output wire Carry, Zero, out
           //Suma A y B
           3'b011:  Y_5<= A + B;
           //NAND
-          3'b100:  Y_5<=(A~&B);
+          3'b100:  Y_5<={ 1'b0, ~(A&B)};
 
 
       endcase
@@ -88,8 +90,8 @@ module ALU(input wire[3:0] A, B, input wire[2:0] F, output wire Carry, Zero, out
 
 endmodule
 
-module ffT (input clk, reset, output wire Q);
-  reg enable;
+module ffT (input wire clk, reset, output wire Q);
+  wire enable;
   assign enable=1;
   wire jumper;
   not(jumper, Q);
@@ -122,38 +124,38 @@ module contador(input wire clk, reset, EN, load, input wire[11:0] inpload, outpu
 
 endmodule
 //Decoder
-module decoder(input wire[6:0] F, output reg inPC, loadPC, loadA, loadFlags, output reg[2:0]S, output reg csRAM, weRAM, oeALU, oeIN, oeOprnd, loadOut);
+module decoder(input wire[6:0] F, output wire inPC, loadPC, loadA, loadFlags, output wire[2:0]S, output wire csRAM, weRAM, oeALU, oeIN, oeOprnd, loadOut);
 
+  reg[12:0] Y;
 
   always@(F) begin
-    case(F)
-    //Implementamos la tabla con cses
-        7'b0000000: assign Y= 13'b1000000001000;
-        7'b1000000: assign Y= 13'b1000000001000;
-        7'b0000101: assign Y= 13'b0100000001000;
-        7'b0000111: assign Y= 13'b0100000001000;
-        7'b0000001: assign Y= 13'b1000000001000;
-        7'b0000011: assign Y= 13'b1000000001000;
-        7'b0001101: assign Y= 13'b1000000001000;
-        7'b0001001: assign Y= 13'b0100000001000;
-        7'b0001101: assign Y= 13'b0100000001000;
-        7'b0010001: assign Y= 13'b0001001000010;
-        7'b0011001: assign Y= 13'b1001001100000;
-        7'b0100001: assign Y= 13'b0011010000010;
-        7'b0100011: assign Y= 13'b0011010000010;
-        7'b0101001: assign Y= 13'b0011010000100;
-        7'b0110001: assign Y= 13'b1011010100000;
-        7'b0111001: assign Y= 13'b1000000111000;
-        7'b1000011: assign Y= 13'b0100000001000;
-        7'b1000001: assign Y= 13'b1000000001000;
-        7'b1001011: assign Y= 13'b1000000001000;
-        7'b1001001: assign Y= 13'b0100000001000;
-        7'b1010001: assign Y= 13'b0011011000010;
-        7'b1011001: assign Y= 13'b1011011100000;
-        7'b1100001: assign Y= 13'b0100000001000;
-        7'b1101001: assign Y= 13'b0000000001001;
-        7'b1110001: assign Y= 13'b0011100000010;
-        7'b1111001: assign Y= 13'b1011100100000;
+    casez(F)
+
+       default: Y <= 13'b0000000000000;
+    //Implementamos la tabla con cases
+    7'bzzzzzz0: Y <= 13'b1000000001000;
+    7'b00001z1: Y <= 13'b0100000001000;// JC
+    7'b00000z1: Y <= 13'b1000000001000;// JC
+    7'b00011z1: Y <= 13'b1000000001000;// JNC
+    7'b00010z1: Y <= 13'b0100000001000;// JNC
+    7'b0010zz1: Y <= 13'b0001001000010;// CMPI
+    7'b0011zz1: Y <= 13'b1001001100000;// CMPM
+    7'b0100zz1: Y <= 13'b0011010000010;// LIT
+    7'b0101zz1: Y <= 13'b0011010000100;// IN
+    7'b0110zz1: Y <= 13'b1011010100000;// LD
+    7'b0111zz1: Y <= 13'b1000000111000;// ST
+    7'b1000z11: Y <= 13'b0100000001000;// JZ
+    7'b1000z01: Y <= 13'b1000000001000;// JZ
+    7'b1001z11: Y <= 13'b1000000001000;// JNZ
+    7'b1001z01: Y <= 13'b0100000001000;// JNZ
+    7'b1010zz1: Y <= 13'b0011011000010;// ADDI
+    7'b1011zz1: Y <= 13'b1011011100000;// ADDM
+    7'b1100zz1: Y <= 13'b0100000001000;// JMP
+    7'b1101zz1: Y <= 13'b0000000001001;// OUT
+    7'b1110zz1: Y <= 13'b0011100000010;// NANDI
+    7'b1111zz1: Y <= 13'b1011100100000;// NANDM
+
+
       endcase
       end
 
@@ -171,7 +173,6 @@ module decoder(input wire[6:0] F, output reg inPC, loadPC, loadA, loadFlags, out
 
 endmodule
 
-
 //Memoria ROM
 module memoria(input wire[11:0] address, output wire [7:0] data);
 
@@ -179,7 +180,7 @@ module memoria(input wire[11:0] address, output wire [7:0] data);
 
     initial begin
   //recordar hacer la lista con .list
-   $readmemb("EPROM.list", memory);
+   $readmemh("EPROM.list", memory);
     end
 
    assign data = memory[address];
@@ -207,81 +208,74 @@ module fetch(input wire clk, reset, enable, input wire[7:0] D, output wire[3:0] 
 endmodule
 
 //Modulo de la memoria RAM
-module RAM(input reg[11:0] RAMaddress, input wire csRAM, weRAM, output reg [3:0] RAMdata);
+module RAM(input wire[11:0] RAMaddress, input wire csRAM, weRAM, inout wire [3:0] RAMdata);
 
-    wire[3:0] dataout;
+    reg[3:0] dataout;
     reg[3:0] memory[0:4095];
 
 
         //Modulo de ST
-          always @ (RAMaddress or RAMdata or weRAM) begin
+          always @ (RAMaddress or RAMdata or weRAM or RAMdata) begin
               if (csRAM && weRAM) begin
-                    memory[RAMaddress]= RAMdata;
+                memory[RAMaddress]<= RAMdata;
               end
           end
 
         //Modulo de lectura
-        always @ (RAMaddress or RAMdata or weRAM) begin
+        always @ (RAMaddress or RAMdata or csRAM) begin
             if (csRAM && !weRAM) begin
-                  dataout = memory[RAMaddress];
+               dataout <= memory[RAMaddress];
             end
         end
 
         //Buffer de la RAM
-        assign RAMdata= (csRAM && !weRAM) ? dataout : 4'bz;
+         assign RAMdata= (csRAM && !weRAM) ? dataout : 4'bz;
   endmodule
 
 
-//Modulo desde el contador hasta el Fetch
-module PCFetch(input wire clk, reset, ENcounter, ENnotphase, Load, input wire[11:0] InputLoad, output wire[7:0] data, output wire[3:0] oprnd, instr);
-
-        wire[11:0] Y;
-        wire[7:0] data;
-
-        contador U1(clk, reset, ENcounter, Load, InputLoad, Y);
-        memoria U2(Y, data);
-        fetch U3(clk, reset, ENnotphase, data, instr, oprnd);
-endmodule
-
-//Modulo desde el buffer despues de Fetch hasta el buffer despues de la ALU
-module accualu(input wire[3:0] oprnd, input wire[2:0] F, input wire oeOprnd, oeALU, clk, reset, loadA, output wire[3:0] data_bus, output wire carry, zero);
-      wire[3:0] data_bus, wireA, wireY;
-
-      //Buffer de Oprnd despues del Fetch
-      TriBuff U1 (oprnd, oeOprnd, data_bus);
-
-      accu U2(clk, reset, loadA, wireY, wireA);
-      ALU U3(wireA, data_bus, F, carry, zero, wireY);
-
-      //Buffer de la salidad de la ALU
-      TriBuff U4(wireY, oeALU, data_bus);
-endmodule
-
-
-module uP(input wire clock, reset, input wire[3:0] pushbuttons, output wire phase, c_flag, z_flag, output wire[3:0] instr, oprnd, data_bus, FF_out, accu, output wire[7:0] program_byte, output wire[11:0] pc, address_ram);
+module uP(input wire clock, reset, input wire[3:0] pushbuttons, output wire phase, c_flag, z_flag, output wire[3:0] instr, oprnd, data_bus, FF_out, accu, output wire[7:0] program_byte, output wire[11:0] PC, address_RAM);
   wire notphase, carry, zerro;
-  wire[11:0] address_RAM;
-  wire[3:0] data_bus;
+
   wire[6:0] F;
+  wire[3:0] wireY;
   wire[2:0] S;
-  F[6:3]= instr;
-  F[2]= c_flag;
-  F[1]= z_flag;
-  F[0]= phase;
-  address_RAM[11:8] = oprnd;
-  address_RAM[7:0] = program_byte;
+  assign F[6:3]= instr;
+  assign F[2]= c_flag;
+  assign F[1]= z_flag;
+  assign F[0]= phase;
+  assign address_RAM[11:8] = oprnd;
+  assign address_RAM[7:0] = program_byte;
   not(notphase, phase);
 
-  //Modulo flags es un FFD 2bit pero con cada bit independiente
-  Flags U4(clock, reset, loadFlags, carry, zerro, c_flag, z_flag);
+  ffT ffphase(clock, reset, phase);
 
-  decoder U0( F, inPC, loadPC, loadA, loadFlags, S, csRAM, weRAM, oeALU, oeIN, oeOprnd, loadOut);
-  ffT Phase(clk, reset, phase);
-  PCFetch U1(clk, reset, inPC, notphase, loadPC, address_RAM, program_byte, oprnd, instr);
-  accualu U2(oprnd, S, oeOprnd, oeALU, clk, reset, loadA, data_bus, carry, zerro);
-  RAM U3(address_RAM, csRAM, weRAM, data_bus);
+  contador ProgCounter(clock, reset, inPC, loadPC, address_RAM, PC);
+
+  memoria ROM(PC, program_byte);
+
+  decoder Deco(F, inPC, loadPC, loadA, loadFlags, S, csRAM, weRAM, oeALU, oeIN, oeOprnd, loadOut);
+
+  fetch Fetch(clock, reset, notphase, program_byte, instr, oprnd);
+
+  TriBuff BuffOprnd(oprnd, oeOprnd, data_bus);
+
+  RAM Ram(address_RAM, csRAM, weRAM, data_bus);
+
+  ALU Alu(accu, data_bus, S, carry, zero, wireY);
+
+  TriBuff BuffALU(wireY, oeALU, data_bus);
+
+  accu ACCU(clock, reset, loadA, wireY , accu);
+
+  Flags flags(clock, reset, loadFlags, carry, zero, c_flag, z_flag);
 
   TriBuff Inputs(pushbuttons, oeIN, data_bus);
-  ffD4B output(clk, reset, loadOut, data_bus, FF_out);
+
+  ffD4B Outputs(clock, reset, loadOut, data_bus, FF_out);
+
+
+
+
+
 
 endmodule
