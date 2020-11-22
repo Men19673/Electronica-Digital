@@ -78,7 +78,7 @@ module ALU(input wire[3:0] A, B, input wire[2:0] S, output wire Carry, Zero, out
           3'b010:  Y_5<= B;
           //Suma A y B
           3'b011:  Y_5<= A + B;
-          //NAND
+          //NAND, se hace una concatenación para no tomar en cuenta el primer bit de carry
           3'b100:  Y_5<={ 1'b0, ~(A&B)};
 
 
@@ -90,6 +90,7 @@ module ALU(input wire[3:0] A, B, input wire[2:0] S, output wire Carry, Zero, out
 
 endmodule
 
+ //FFT phase
 module ffT (input wire clk, reset, output wire Q);
   wire enable;
   assign enable=1;
@@ -214,21 +215,21 @@ module RAM(input wire[11:0] RAMaddress, input wire csRAM, weRAM, inout wire [3:0
     reg[3:0] memory[0:4095];
 
 
-        //Modulo de ST
+        //Modulo de escritura (ST)
           always @ (RAMaddress or RAMdata or weRAM or RAMdata) begin
               if (csRAM && weRAM) begin
                 memory[RAMaddress]<= RAMdata;
               end
           end
 
-        //Modulo de lectura
+        //Modulo de lectura (LD)
         always @ (RAMaddress or RAMdata or csRAM) begin
             if (csRAM && !weRAM) begin
                dataout <= memory[RAMaddress];
             end
         end
 
-        //Buffer de la RAM
+        //Buffer de la RAM para evitar para la contencion
          assign RAMdata= (csRAM && !weRAM) ? dataout : 4'bz;
   endmodule
 
@@ -239,42 +240,58 @@ module uP(input wire clock, reset, input wire[3:0] pushbuttons, output wire phas
   wire[6:0] F;
   wire[3:0] wireY;
   wire[2:0] S;
+
+  //Aqui se concatenan los bits de instr, c_flag y z_flag al decoder
   assign F[6:3]= instr;
   assign F[2]= c_flag;
   assign F[1]= z_flag;
   assign F[0]= phase;
+
+  //Concatenación del address_RAM
   assign address_RAM[11:8] = oprnd;
   assign address_RAM[7:0] = program_byte;
+
+  //Not phase para el phase
   not(notphase, phase);
 
+  //FF tipo T del phace
   ffT ffphase(clock, reset, phase);
 
+  //PC en este entra el load PC y el incremento PC junto con el address RAM
   contador ProgCounter(clock, reset, inPC, loadPC, address_RAM, PC);
 
+  //La Rom recibe el PC del counter
   memoria ROM(PC, program_byte);
 
+  //El decoder recibe las flags, instr y phase
   decoder Deco(F, inPC, loadPC, loadA, loadFlags, S, csRAM, weRAM, oeALU, oeIN, oeOprnd, loadOut);
 
+  //El fetch separa el program_byte entre instr y oprnd siendo el enable el not phase
   fetch Fetch(clock, reset, notphase, program_byte, instr, oprnd);
 
+  //Buffer para el oprnd
   TriBuff BuffOprnd(oprnd, oeOprnd, data_bus);
 
+  //Memoria RAM single input/output
   RAM Ram(address_RAM, csRAM, weRAM, data_bus);
 
+  //En la alu ingresa las instrucciones del decoder el wire Y va hacia la accu y el buffer del ALU
   ALU Alu(accu, data_bus, S, carry, zero, wireY);
 
+  //El buffer ALu recibe los datos del wireY que es la salida del ALU
   TriBuff BuffALU(wireY, oeALU, data_bus);
 
+  //Guarda los datos que salen de la ALU
   accu ACCU(clock, reset, loadA, wireY , accu);
 
+  //Es un flip flop 2bits que gurada los valores de las banderas y las regresa al decoder
   Flags flags(clock, reset, loadFlags, carry, zero, c_flag, z_flag);
 
+  //Permite la entrada de datos con un tri buffer
   TriBuff Inputs(pushbuttons, oeIN, data_bus);
 
+  //Es un flip flop 4b que permite la salida de datos
   ffD4B Outputs(clock, reset, loadOut, data_bus, FF_out);
-
-
-
 
 
 

@@ -1,0 +1,36 @@
+4C //Lit 12
+2F //Resta 12-15 =-3
+81 //Jump if zero, no deberia funcionar
+23
+01 //Jump if carry, deberia realizar el salto a 0x123
+23
+@123
+49 //Lit 9
+71 //Guardar 9 en la posición 0x123
+23
+31 //Compare con el 9 del accu con el 9 que esta en 123
+23
+81 //Jump if zero, a la posicion 0x150
+50
+@150
+50 //Guardar en el accu los valores de pushbuttons
+F1 //NANDM con el valor de memoria en 0x123
+23
+48
+71 //Guardar 0x8 en accu
+50
+42
+B1 //Sumar el 2 del accu con el 8 de memoria
+50
+A7 //Sumar 6 al 10 del accu
+92 //Jump if not zero, el numero anterior tuvo que sacar un carry, por lo que deberia hacer el salto
+00
+@200
+4F
+D0 //Sacar el valor a OUT
+13 //Jump if not carry, salta a 300
+00
+@300
+EF //NANDI con el valor del accu
+61 //Load el valor de 0x150
+50
